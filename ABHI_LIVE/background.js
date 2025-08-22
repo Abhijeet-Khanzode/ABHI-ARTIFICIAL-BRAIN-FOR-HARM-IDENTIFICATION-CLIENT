@@ -3,7 +3,7 @@ let intervalId = null;
 let phishingActive = false;
 let activeTabId = null;
 let alertInterval = null;
-const SERVER_URL = "https://abhi-shield.onrender.com";
+const SERVER_URL = "https://abhi-artificial-brain-for-harm.onrender.com";
 
 
 // ✅ Start monitoring active tab
@@ -65,7 +65,7 @@ function checkURL(url) {
 
         console.log("📡 Sending URL to Flask for check:", url);
 
-        fetch("https://abhi-shield.onrender.com/check", {
+        fetch("https://abhi-artificial-brain-for-harm.onrender.com/check", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ url })
@@ -131,7 +131,7 @@ chrome.notifications.onButtonClicked.addListener((notificationId, buttonIndex) =
         console.log("📬Thank you for your contribution!\n\nOur team will review this site and get back to you.\n\nUntil then, please stay alert and avoid sharing sensitive information.\n\n— ABHI Team 🛡️");
 
 
-        fetch("https://abhi-shield.onrender.com/feedback", {
+        fetch("https://abhi-artificial-brain-for-harm.onrender.com/feedback", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

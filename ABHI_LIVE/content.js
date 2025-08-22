@@ -69,7 +69,7 @@ function sendMessage() {
   chat.scrollTop = chat.scrollHeight;
   input.value = "";
 
-  fetch("https://abhi-shield.onrender.com/respond", {
+  fetch("https://abhi-artificial-brain-for-harm.onrender.com/respond", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ message: msg })

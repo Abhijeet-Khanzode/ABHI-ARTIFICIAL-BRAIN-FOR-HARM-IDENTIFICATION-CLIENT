@@ -38,7 +38,7 @@
     ],
     "host_permissions": [
         "<all_urls>",
-        "https://abhi-shield.onrender.com/*"
+        "https://abhi-artificial-brain-for-harm.onrender.com/*"
     ],
     "background": {
         "service_worker": "background.js"
