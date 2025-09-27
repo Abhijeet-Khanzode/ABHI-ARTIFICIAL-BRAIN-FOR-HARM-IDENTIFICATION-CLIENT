@@ -76,6 +76,7 @@ function checkURL(url) {
                 console.log("📬 Response from Flask:", data);
 
                 if (data.isPhishing && confidence >= 70) {
+                    chrome.tabs.sendMessage(activeTabId, { prediction: "phishing" });
                     if (!phishingActive) {
                         phishingActive = true;
                         startAlertLoop(url);
@@ -95,6 +96,7 @@ function checkURL(url) {
                     phishingActive = false;
                     clearInterval(alertInterval);
                     console.log("✅ Safe:", url);
+                    chrome.tabs.sendMessage(activeTabId, { prediction: "safe" });
                 }
             })
             .catch(err => console.error("Fetch Error:", err));

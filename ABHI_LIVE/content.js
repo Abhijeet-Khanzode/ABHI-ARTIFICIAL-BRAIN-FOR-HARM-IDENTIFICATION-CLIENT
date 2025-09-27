@@ -4,6 +4,65 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 });
 
+// content.js
+
+// Create wrapper
+let wrapper = document.createElement('div');
+wrapper.style.position = 'fixed';
+wrapper.style.top = '10px';
+wrapper.style.right = '10px';
+wrapper.style.zIndex = '9999';
+wrapper.style.textAlign = 'center';
+wrapper.style.fontFamily = 'Arial, sans-serif';
+document.body.appendChild(wrapper);
+
+// Create the dot
+let dot = document.createElement('div');
+dot.style.width = '20px';
+dot.style.height = '20px';
+dot.style.borderRadius = '50%';
+dot.style.margin = '0 auto';
+wrapper.appendChild(dot);
+
+// Create the label
+let label = document.createElement('span');
+label.innerText = "A.B.H.I.";
+label.style.display = 'block';
+label.style.marginTop = '4px';
+label.style.fontSize = '12px';
+label.style.fontWeight = 'bold';
+label.style.color = '#16d3d3ff';
+wrapper.appendChild(label);
+
+// Function to update dot color + blink
+function updateDot(isPhishing) {
+  if (isPhishing) {
+    dot.style.backgroundColor = 'red';
+    dot.style.animation = 'blink 1s infinite';
+  } else {
+    dot.style.backgroundColor = 'green';
+    dot.style.animation = 'blink 1s infinite';
+  }
+}
+
+// Listen for messages from background.js
+chrome.runtime.onMessage.addListener((msg) => {
+  if (msg.prediction === 'phishing') updateDot(true);
+  else if (msg.prediction === 'safe') updateDot(false);
+});
+
+// CSS animation
+let style = document.createElement('style');
+style.innerHTML = `
+@keyframes blink {
+    0% {opacity: 1;}
+    50% {opacity: 0;}
+    100% {opacity: 1;}
+}`;
+document.head.appendChild(style);
+
+
+
 let isChatOpen = false;
 
 // Create floating button
