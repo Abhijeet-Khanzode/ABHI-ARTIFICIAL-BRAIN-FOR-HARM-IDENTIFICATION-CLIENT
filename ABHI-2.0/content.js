@@ -31,7 +31,7 @@ label.style.display = 'block';
 label.style.marginTop = '4px';
 label.style.fontSize = '12px';
 label.style.fontWeight = 'bold';
-label.style.color = '#16d3d3ff';
+// label.style.color = '#16d3d3ff';
 wrapper.appendChild(label);
 
 // Function to update dot color + blink
@@ -39,9 +39,12 @@ function updateDot(isPhishing) {
   if (isPhishing) {
     dot.style.backgroundColor = 'red';
     dot.style.animation = 'blink 1s infinite';
+    label.style.color = 'red';
+
   } else {
     dot.style.backgroundColor = 'green';
     dot.style.animation = 'blink 1s infinite';
+    label.style.color = '#2dc550ff';
   }
 }
 
