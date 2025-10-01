@@ -4,66 +4,91 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 });
 
-// content.js
+// ========================
+// ABHI Dot Indicator Script
+// ========================
 
-// Create wrapper
-let wrapper = document.createElement('div');
-wrapper.style.position = 'fixed';
-wrapper.style.top = '10px';
-wrapper.style.right = '10px';
-wrapper.style.zIndex = '9999';
-wrapper.style.textAlign = 'center';
-wrapper.style.fontFamily = 'Arial, sans-serif';
-document.body.appendChild(wrapper);
+// Check if wrapper already exists to avoid duplicates
+let wrapper = document.getElementById("abhi-wrapper");
 
-// Create the dot
-let dot = document.createElement('div');
-dot.style.width = '20px';
-dot.style.height = '20px';
-dot.style.borderRadius = '50%';
-dot.style.margin = '0 auto';
-wrapper.appendChild(dot);
+if (!wrapper) {
+  // Create wrapper
+  wrapper = document.createElement('div');
+  wrapper.id = "abhi-wrapper";
+  wrapper.style.position = 'fixed';
+  wrapper.style.top = '10px';
+  wrapper.style.right = '10px';
+  wrapper.style.zIndex = '999999';
+  wrapper.style.textAlign = 'center';
+  wrapper.style.fontFamily = 'Arial, sans-serif';
+  document.body.appendChild(wrapper);
 
-// Create the label
-let label = document.createElement('span');
-label.innerText = "A.B.H.I.";
-label.style.display = 'block';
-label.style.marginTop = '4px';
-label.style.fontSize = '12px';
-label.style.fontWeight = 'bold';
-// label.style.color = '#16d3d3ff';
-wrapper.appendChild(label);
+  // Create the dot
+  var dot = document.createElement('div');
+  dot.id = "abhi-dot";
+  dot.style.width = '20px';
+  dot.style.height = '20px';
+  dot.style.borderRadius = '50%';
+  dot.style.margin = '0 auto';
+  wrapper.appendChild(dot);
 
-// Function to update dot color + blink
+  // Create the label
+  var label = document.createElement('span');
+  label.id = "abhi-label";
+  label.innerText = "A.B.H.I.";
+  label.style.display = 'block';
+  label.style.marginTop = '4px';
+  label.style.fontSize = '12px';
+  label.style.fontWeight = 'bold';
+  wrapper.appendChild(label);
+
+  // Add CSS animation styles
+  let style = document.createElement('style');
+  style.innerHTML = `
+    @keyframes blink {
+        0% {opacity: 1; transform: scale(1);}
+        50% {opacity: 0.4; transform: scale(1.2);}
+        100% {opacity: 1; transform: scale(1);}
+    }`;
+  document.head.appendChild(style);
+} else {
+  var dot = document.getElementById("abhi-dot");
+  var label = document.getElementById("abhi-label");
+}
+
+// ========================
+// Functions
+// ========================
+
+// Restart CSS animation so it always triggers
+function restartAnimation(el) {
+  el.style.animation = 'none';
+  el.offsetHeight; // trigger reflow
+  el.style.animation = 'blink 1s infinite';
+}
+
+// Update the dot based on prediction
 function updateDot(isPhishing) {
   if (isPhishing) {
     dot.style.backgroundColor = 'red';
-    dot.style.animation = 'blink 1s infinite';
     label.style.color = 'red';
-
   } else {
     dot.style.backgroundColor = 'green';
-    dot.style.animation = 'blink 1s infinite';
     label.style.color = '#2dc550ff';
   }
+  restartAnimation(dot);
 }
 
-// Listen for messages from background.js
+// ========================
+// Listen for background.js messages
+// ========================
 chrome.runtime.onMessage.addListener((msg) => {
-  if (msg.prediction === 'phishing') updateDot(true);
-  else if (msg.prediction === 'safe') updateDot(false);
+  if (msg.prediction === 'phishing') {
+    updateDot(true);
+  } else if (msg.prediction === 'safe') {
+    updateDot(false);
+  }
 });
-
-// CSS animation
-let style = document.createElement('style');
-style.innerHTML = `
-@keyframes blink {
-    0% {opacity: 1;}
-    50% {opacity: 0;}
-    100% {opacity: 1;}
-}`;
-document.head.appendChild(style);
-
 
 
 let isChatOpen = false;
