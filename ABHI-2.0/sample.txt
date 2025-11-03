@@ -18,3 +18,16 @@ Custom dummy phishing example
 http://secure-login-verify-bank.com
 
 PhishTank live entry (check a random from verified list) — use any from your verified_online.csv
+
+
+
+
+DATABASE : YOUR DATABASE LINK
+TO : VIEW DATABASE
+
+\dt
+
+SELECT * FROM feedback_review;
+SELECT * FROM review;
+
+
