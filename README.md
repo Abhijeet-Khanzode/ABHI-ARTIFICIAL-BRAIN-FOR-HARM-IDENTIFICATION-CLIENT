@@ -84,6 +84,9 @@ Contributions are welcome!
 This project is licensed under the MIT License – you are free to use and modify with attribution.
 
 👨‍💻 Author
-Developed by Abhijeet Khanzode
+Developed by
+👤 Abhijeet Khanzode
+👤 Parth Dhande
+👤 Ayush Bangare
 📧 For queries: dev.abhi.khanzode@gmail.com
 
